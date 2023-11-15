@@ -5,7 +5,7 @@ import matplotlib.animation as animation
 
 
 n = 11
-n_iter = 10000
+n_iter = 1000
 alpha = 0.1
 gamma = 0.99
 rewards = [0 for _ in range(n)]

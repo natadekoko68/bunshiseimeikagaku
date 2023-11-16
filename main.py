@@ -1,33 +1,34 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+class Maze:
+    def __init__(self,h,w):
+        self.width = w
+        self.height = h
+        self.walls = []
 
-n = 11
-n_iter = 1000
-alpha = 0.1
-gamma = 0.99
-rewards = [0 for _ in range(n)]
-rewards[9] = 1
-values = [0 for _ in range(n)]
-ims = []
+    def input_maze(self,filepath):
+        cnt = -1
+        with open(filepath) as f:
+            for line in f:
+                # print(line.split("+"))
+                line = line.rstrip()
+                cnt += 1
+                if cnt % 2 == 0:
+                    # print(line)
+                    for i in range(self.width):
+                        num = i*4+1
+                        if line[num] == "-":
+                            self.walls.append((cnt//2,i,"up"))
+                        else:
+                            pass
+                else:
+                    # print(line.replace(" ","_"))
+                    for i in range(self.width+1):
+                        num = i*4
+                        if line[num] == "|":
+                            self.walls.append(((cnt-1)//2,i,"left"))
+                        else:
+                            pass
 
-ims_tds = []
 
-def reward(v,r):
-    t = [0 for _ in range(n)]
-    for k in range(n - 1):
-        t[k] = r[k+1] + gamma * v[k + 1] - v[k]
-    t[0] = 0
-    for k in range(n - 1):
-        v[k] = round(v[k] + alpha * (r[k+1] + gamma * v[k + 1] - v[k]), 3)
-    v[0] = 0
-    return v, t
-
-for i in range(n_iter):
-    values, tds = reward(values, rewards)
-    im = plt.plot(values)
-    # im2 = plt.plot(tds)
-    # ims.append(im)
-print(values)
-
-plt.show()
+a = Maze(4,5)
+a.input_maze("/Users/kotaro/PycharmProjects/分子生命科学/test.txt")
+print(a.walls)

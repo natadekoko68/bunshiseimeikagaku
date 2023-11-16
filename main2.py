@@ -12,6 +12,18 @@ _######_
 _______G
 """
 
+a = """
+S__#____
+_#_#__#_
+_#_#__#_
+_#____#_
+_#######
+_____#_G
+_____#__
+________
+"""
+
+goals = {}
 maze = list(a.split())
 print(maze)
 
@@ -35,7 +47,10 @@ move_y = [1,-1,0,0]
 while queue:
     t,num = queue.pop()
     if t == g:
-        print("goal",num)
+        if num in goals:
+            goals[num] += 1
+        else:
+            goals[num] = 1
     else:
         for i in range(4):
             next_x = t[1] + move_x[i]
@@ -61,6 +76,13 @@ for i in range(height):
     for j in range(width):
         temp.append(str(value[i][j]))
     print("\t".join(temp))
+
+for key in goals:
+    print(key,goals[key])
+
+
+
+
 
 
 
